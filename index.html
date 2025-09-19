@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>63天零基础入门编程-学习计划表</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+  <style>
+        :root {
+            --bg-color: #f4f7f9;
+            --container-bg: #fff;
+            --text-color-primary: #333;
+            --text-color-secondary: #7f8c8d;
+            --header-color: #2c3e50;
+            --link-bg: #5d9cec;
+            --link-bg-hover: #4a8cdb;
+            --week-header-color: #95a5a6;
+            --week-header-weekend: #e74c3c;
+            --cell-bg: #fdfdfd;
+            --cell-border: #ecf0f1;
+            --cell-title-color: #34495e;
+            --cell-completed-bg: #e8f5e9;
+            --cell-completed-icon: #27ae60;
+            --cell-hover-border: #5d9cec;
+            --cell-next-up-border: #ff9800;
+            --cell-next-up-shadow: rgba(255, 152, 0, 0.6);
+            --modal-link-video-bg: #27ae60;
+            --modal-link-video-hover: #229954;
+            --modal-link-complete-bg: #95a5a6;
+            --modal-link-complete-hover: #7f8c8d;
+            --note-border: #ccc;
+            --progress-bg: #eaf2f8;
+            --progress-border: #d4e6f1;
+            --progress-text: #34495e;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        html.dark-mode {
+            --bg-color: #121212;
+            --container-bg: #1e1e1e;
+            --text-color-primary: #e0e0e0;
+            --text-color-secondary: #888;
+            --header-color: #fff;
+            --link-bg: #4a8cdb;
+            --link-bg-hover: #5d9cec;
+            --week-header-color: #888;
+            --week-header-weekend: #f48fb1;
+            --cell-bg: #2a2a2a;
+            --cell-border: #444;
+            --cell-title-color: #e0e0e0;
+            --cell-completed-bg: #2c3e50;
+            --cell-completed-icon: #66bb6a;
+            --cell-hover-border: #76a9e8;
+            --cell-next-up-border: #ffb74d;
+            --cell-next-up-shadow: rgba(255, 183, 77, 0.5);
+            --modal-link-video-bg: #66bb6a;
+            --modal-link-video-hover: #4caf50;
+            --modal-link-complete-bg: #616161;
+            --modal-link-complete-hover: #757575;
+            --note-border: #555;
+            --progress-bg: #2c3e50;
+            --progress-border: #444;
+            --progress-text: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color-primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+  margin: 0;
+            padding: 20px;
+  box-sizing: border-box;
+}
+
+.container {
+            width: 100%;
+  max-width: 1200px;
+            background: var(--container-bg);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            padding: 30px;
+            position: relative; /* For theme toggle button positioning */
+        }
+
+        #theme-toggle-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: 2px solid var(--text-color-secondary);
+            color: var(--text-color-secondary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #theme-toggle-btn:hover {
+            border-color: var(--header-color);
+            color: var(--header-color);
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        .header {
+  text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: var(--header-color);
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: var(--text-color-secondary);
+            margin-bottom: 15px;
+        }
+        .header .links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 8px 16px;
+            background-color: var(--link-bg);
+            color: white;
+  text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .header .links a:hover {
+            background-color: var(--link-bg-hover);
+        }
+
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .week-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--week-header-color);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--cell-border);
+        }
+        .week-header.weekend {
+            color: var(--week-header-weekend);
+        }
+
+        .day-cell {
+            position: relative;
+            background-color: var(--cell-bg);
+            border: 1px solid var(--cell-border);
+            border-radius: 8px;
+            padding: 10px;
+            min-height: 90px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+        }
+        .day-cell.completed {
+            background-color: var(--cell-completed-bg);
+            opacity: 0.8;
+        }
+        .day-cell.completed::after {
+            content: '✔';
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            font-size: 1.5em;
+            color: var(--cell-completed-icon);
+            font-weight: bold;
+        }
+        .day-cell:hover {
+  transform: translateY(-5px);
+            box-shadow: 0 12px 20px var(--shadow-color);
+            border-color: var(--cell-hover-border);
+        }
+        .day-cell.empty {
+            background-color: transparent;
+            border: 1px dashed var(--cell-border);
+            cursor: default;
+        }
+        .day-cell.empty:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--cell-border);
+        }
+        .day-cell.review .day-title {
+            color: var(--cell-completed-icon);
+        }
+
+        .day-number {
+            font-size: 0.9em;
+            font-weight: 500;
+            color: var(--text-color-secondary);
+        }
+.day-title {
+            font-size: 1.4em;
+  font-weight: 700;
+            color: var(--cell-title-color);
+            line-height: 1.3;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+            /* Added for centering */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--container-bg);
+            margin: auto;
+            padding: 30px;
+            border: 1px solid var(--cell-border);
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.3s;
+            /* Added for robust centering */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .close-button {
+            color: var(--text-color-secondary);
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--text-color-primary);
+        }
+
+        #modal-day {
+            font-size: 1.5em;
+            color: var(--text-color-secondary);
+            margin-bottom: 5px;
+        }
+        #modal-title {
+    font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--header-color);
+        }
+        #modal-details {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: var(--text-color-primary);
+    margin-bottom: 30px;
+  }
+  
+        .modal-links {
+            display: flex;
+            justify-content: center;
+    gap: 15px;
+  }
+  
+        .modal-link {
+            display: inline-block;
+            padding: 12px 25px;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        .modal-link.exercise {
+            background-color: var(--link-bg);
+        }
+        .modal-link.exercise:hover {
+            background-color: var(--link-bg-hover);
+        }
+        .modal-link.video {
+            background-color: var(--modal-link-video-bg);
+        }
+        .modal-link.video:hover {
+            background-color: var(--modal-link-video-hover);
+        }
+        .modal-link.complete {
+            background-color: var(--modal-link-complete-bg);
+        }
+        .modal-link.complete:hover {
+            background-color: var(--modal-link-complete-hover);
+        }
+        
+        #note-area {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid var(--note-border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1em;
+            resize: vertical;
+            background-color: var(--cell-bg);
+            color: var(--text-color-primary);
+        }
+        
+        #note-status {
+            display: block;
+            text-align: right;
+            font-size: 0.9em;
+            color: var(--text-color-secondary);
+            height: 1.2em; /* Reserve space to prevent layout shift */
+            margin-bottom: 10px;
+        }
+
+        #progress-tracker {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 1.2em;
+            font-weight: 500;
+            color: var(--progress-text);
+            background-color: var(--progress-bg);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--progress-border);
+            transition: all 0.3s ease;
+        }
+
+        .day-cell.next-up {
+            border-color: var(--cell-next-up-border);
+            box-shadow: 0 0 12px var(--cell-next-up-shadow);
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        @keyframes slideIn {
+            from {transform: translateY(-5px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        @media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .container {
+                padding: 20px 15px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1em;
+            }
+            
+            .header .links {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            
+            #progress-tracker {
+    font-size: 1.1em;
+                padding: 10px;
+                margin-top: 20px;
+            }
+
+            .week-header {
+                display: none;
+            }
+
+            .calendar-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            /* This overrides the inline style set by JS */
+            .day-cell {
+                grid-column: auto !important;
+                min-height: auto; /* Allow height to be natural */
+                padding: 15px;
+                text-align: center;
+            }
+            
+            /* The filler cells are not needed in a single column layout */
+            .day-cell.empty {
+                display: none;
+            }
+            
+            .modal-content {
+                width: 90%;
+                margin: auto;
+                padding: 20px;
+            }
+
+            #modal-title {
+                font-size: 1.5em;
+            }
+
+            #modal-details {
+                font-size: 1em;
+            }
+            
+            .modal-links {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .container {
+                padding: 15px 10px;
+            }
+        }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+        <button id="theme-toggle-btn">🌙</button>
+        <div class="header">
+            <h1>63天零基础入门编程</h1>
+            <p>牛客为零基础学习编程的同学准备了入门课程，知识点涵盖语法到常用简单数据结构。共包含9小时的课程讲解和130道练习题。</p>
+            <div class="links">
+                <span>学习交流群：1034093948</span>
+                <a href="https://www.nowcoder.com/link/bilibilixsrmtd" target="_blank" rel="noopener noreferrer">视频课程：点击观看</a>
+                <a href="https://www.nowcoder.com/exam/oj?page=1&tab=%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AF%87&topicId=383&channelPut=strl2025" target="_blank" rel="noopener noreferrer">练习题：进入题单</a>
+            </div>
+            <div id="progress-tracker"></div>
+        </div>
+
+        <div class="calendar-grid">
+            <div class="week-header">周一</div>
+            <div class="week-header">周二</div>
+            <div class="week-header">周三</div>
+            <div class="week-header">周四</div>
+            <div class="week-header">周五</div>
+            <div class="week-header weekend">周六</div>
+            <div class="week-header weekend">周日</div>
+
+            <!-- Data for calendar cells -->
+            <script>
+                const planData = [
+                    // Weeks 1-5 ... (up to day 35)
+                    { day: '1 - 2', title: '编程基础概念', details: '视频课程: 49分钟<br>练习题: 1道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd01' },
+                    { day: '3 - 4', title: '基本数据类型', details: '视频课程: 55分钟<br>练习题: 4道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd04' },
+                    { day: '5 - 6', title: '运算符与表达式', details: '视频课程: 41分钟<br>练习题: 6道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd05' },
+                    { day: '7', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    { day: '8 - 9', title: '顺序结构', details: '视频课程: 15分钟<br>练习题: 8道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd06' },
+                    { day: '10 - 11', title: '选择结构', details: '视频课程: 16分钟<br>练习题: 8道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd07' },
+                    { day: '12 - 13', title: '循环结构', details: '视频课程: 16分钟<br>练习题: 8道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd08' },
+                    { day: '14', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    { day: '15 - 18', title: '数组', details: '视频课程: 50分钟<br>练习题: 14道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd09' },
+                    { day: '19 - 20', title: '字符串', details: '视频课程: 38分钟<br>练习题: 9道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd10' },
+                    { day: '21', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    { day: '22 - 23', title: '字符串', details: '视频课程: 38分钟<br>练习题: 9道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd10' },
+                    { day: '24 - 27', title: '函数', details: '视频课程: 22分钟<br>练习题: 7道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd11' },
+                    { day: '28', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    { day: '29 - 31', title: '类与结构体', details: '视频课程: 33分钟<br>练习题: 7道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd12' },
+                    { day: '32 - 34', title: '序列', details: '视频课程: 22分钟<br>练习题: 7道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd13' },
+                    { day: '35', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    
+                    // New schedule from Day 36
+                    { day: '36 - 39', title: '栈', details: '视频课程: 10分钟<br>练习题: 10道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd14' },
+                    { day: '40 - 41', title: '队列', details: '视频课程: 8分钟<br>练习题: 6道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd15' },
+                    { day: '42', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    { day: '43 - 44', title: '队列', details: '视频课程: 8分钟<br>练习题: 6道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd15' },
+                    { day: '45 - 48', title: '集合', details: '视频课程: 40分钟<br>练习题: 7道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd16' },
+                    { day: '49', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    { day: '50 - 53', title: '优先队列', details: '视频课程: 18分钟<br>练习题: 5道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd17' },
+                    { day: '54 - 55', title: '链表', details: '视频课程: 52分钟<br>练习题: 9道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd18' },
+                    { day: '56', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                    { day: '57 - 58', title: '链表', details: '视频课程: 52分钟<br>练习题: 9道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd18' },
+                    { day: '59 - 62', title: '哈希表', details: '视频课程: 35分钟<br>练习题: 11道', videoLink: 'https://www.nowcoder.com/link/bilibilixsrmtd19' },
+                    { day: '63', title: '复习巩固', details: '复习本周所学内容', type: 'review' },
+                ];
+            </script>
+        </div>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p id="modal-day"></p>
+            <h2 id="modal-title"></h2>
+            <p id="modal-details"></p>
+            <textarea id="note-area" placeholder="在这里记录你的学习心得..."></textarea>
+            <span id="note-status"></span>
+            <div class="modal-links">
+                <a href="#" id="modal-video-link" class="modal-link video" target="_blank" rel="noopener noreferrer">观看视频</a>
+                <a href="https://www.nowcoder.com/exam/oj?page=1&tab=%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E7%AF%87&topicId=383&channelPut=strl2025" id="modal-exercise-link" class="modal-link exercise" target="_blank" rel="noopener noreferrer">进入题单</a>
+                <a href="#" id="modal-complete-btn" class="modal-link complete">标记为已完成</a>
+            </div>
+        </div>
+  </div>
+
+  <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // THEME TOGGLE LOGIC
+            const themeToggleBtn = document.getElementById('theme-toggle-btn');
+            const htmlEl = document.documentElement;
+
+            // Function to apply the theme
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    htmlEl.classList.add('dark-mode');
+                    themeToggleBtn.textContent = '☀️';
+                } else {
+                    htmlEl.classList.remove('dark-mode');
+                    themeToggleBtn.textContent = '🌙';
+                }
+            };
+
+            // Event listener for the button
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = htmlEl.classList.contains('dark-mode') ? 'light' : 'dark';
+                localStorage.setItem('theme', currentTheme);
+                applyTheme(currentTheme);
+            });
+
+            // Initial theme check on page load
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else if (prefersDark) {
+                applyTheme('dark');
+            } else {
+                applyTheme('light');
+            }
+
+
+            // --- EXISTING CALENDAR LOGIC ---
+            const COMPLETION_STORAGE_KEY = 'learningProgress';
+            const NOTES_STORAGE_KEY = 'learningNotes';
+
+            let completedDays = [];
+            let notes = {};
+            let noteSaveTimeout;
+
+            const grid = document.querySelector('.calendar-grid');
+            const modal = document.getElementById('details-modal');
+            const closeBtn = document.querySelector('.close-button');
+            const modalDay = document.getElementById('modal-day');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDetails = document.getElementById('modal-details');
+            const modalVideoLink = document.getElementById('modal-video-link');
+            const modalCompleteBtn = document.getElementById('modal-complete-btn');
+            const progressTracker = document.getElementById('progress-tracker');
+            const noteArea = document.getElementById('note-area');
+            const noteStatus = document.getElementById('note-status');
+
+
+            function highlightNextDay() {
+                // Remove existing highlight first
+                const currentHighlight = document.querySelector('.next-up');
+                if (currentHighlight) {
+                    currentHighlight.classList.remove('next-up');
+                }
+
+                // Find the first non-completed day and highlight it
+                // We specifically look for elements with a data-day attribute to avoid empty cells
+                const nextDayCell = document.querySelector('.day-cell:not(.completed)[data-day]');
+                if (nextDayCell) {
+                    nextDayCell.classList.add('next-up');
+                }
+            }
+
+            function updateProgressDisplay() {
+                const totalTasks = planData.length;
+                const completedCount = completedDays.length;
+                let message = '';
+
+                if (completedCount === 0) {
+                    message = '开始你的学习之旅吧！';
+                } else if (completedCount < totalTasks) {
+                    message = `已完成 ${completedCount} / ${totalTasks}，继续加油！`;
+                } else {
+                    message = `🎉 恭喜！你已完成所有学习计划！ 🎉`;
+                }
+                progressTracker.textContent = message;
+            }
+
+            function saveProgress() {
+                localStorage.setItem(COMPLETION_STORAGE_KEY, JSON.stringify(completedDays));
+            }
+
+            function loadProgress() {
+                const savedCompletions = localStorage.getItem(COMPLETION_STORAGE_KEY);
+                if (savedCompletions) {
+                    completedDays = JSON.parse(savedCompletions);
+                }
+                const savedNotes = localStorage.getItem(NOTES_STORAGE_KEY);
+                if (savedNotes) {
+                    notes = JSON.parse(savedNotes);
+                }
+                document.querySelectorAll('.day-cell[data-day]').forEach(cell => {
+                    if (completedDays.includes(cell.dataset.day)) {
+                        cell.classList.add('completed');
+                    }
+                });
+                updateProgressDisplay();
+                highlightNextDay();
+            }
+
+            // --- Helper function to calculate day span ---
+            function getDaySpan(dayString) {
+                // Use regex to robustly find all numbers in the string
+                const numbers = dayString.match(/\d+/g);
+                
+                if (numbers) {
+                    if (numbers.length > 1) {
+                        // Handle range like "1-2" or "15-18"
+                        return parseInt(numbers[1], 10) - parseInt(numbers[0], 10) + 1;
+                    } else if (numbers.length === 1) {
+                        // Handle single day like "7"
+                        return 1;
+                    }
+                }
+                
+                // Fallback if no numbers are found
+                return 1;
+            }
+
+            // Dynamically create calendar cells from data
+            let currentDayInWeek = 0;
+            planData.forEach(item => {
+                const cell = document.createElement('div');
+                cell.className = 'day-cell';
+                cell.dataset.day = item.day;
+
+                if (item.type === 'review') {
+                    cell.classList.add('review');
+                }
+
+                const span = getDaySpan(item.day);
+
+                // This logic ensures that items wrap correctly to the next line
+                if (currentDayInWeek + span > 7) {
+                    const fillerCells = 7 - currentDayInWeek;
+                    for(let i=0; i < fillerCells; i++) {
+                        const emptyCell = document.createElement('div');
+                        emptyCell.className = 'day-cell empty';
+                        grid.appendChild(emptyCell);
+                    }
+                    currentDayInWeek = 0;
+                }
+
+                if (span > 1) {
+                    cell.style.gridColumn = `span ${span}`;
+                }
+                currentDayInWeek += span;
+                
+                cell.innerHTML = `
+                    <div class="day-number">Day ${item.day}</div>
+                    <div class="day-title">${item.title}</div>
+                `;
+
+                cell.addEventListener('click', () => {
+                    const currentDayId = item.day;
+                    modalDay.textContent = `Day ${currentDayId}`;
+                    modalTitle.textContent = item.title;
+                    modalDetails.innerHTML = item.details;
+
+                    if (item.videoLink) {
+                        modalVideoLink.href = item.videoLink;
+                        modalVideoLink.style.display = 'inline-block';
+                    } else {
+                        modalVideoLink.style.display = 'none';
+                    }
+
+                    const isCompleted = completedDays.includes(currentDayId);
+                    modalCompleteBtn.textContent = isCompleted ? '取消完成' : '标记为已完成';
+                    
+                    noteArea.value = notes[currentDayId] || '';
+                    noteStatus.textContent = ''; 
+
+                    noteArea.oninput = () => {
+                        noteStatus.textContent = '正在输入...';
+                        clearTimeout(noteSaveTimeout);
+                        noteSaveTimeout = setTimeout(() => {
+                            notes[currentDayId] = noteArea.value;
+                            localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notes));
+                            noteStatus.textContent = '已保存 ✔';
+                        }, 500); // Debounce saving
+                    };
+
+                    modalCompleteBtn.onclick = () => {
+                        const index = completedDays.indexOf(currentDayId);
+                        if (index > -1) {
+                            completedDays.splice(index, 1);
+                            cell.classList.remove('completed');
+                        } else {
+                            completedDays.push(currentDayId);
+                            cell.classList.add('completed');
+                        }
+                        saveProgress();
+                        updateProgressDisplay();
+                        highlightNextDay();
+                        modal.style.display = 'none';
+                    };
+
+                    modal.style.display = 'flex';
+                    noteArea.focus();
+                });
+
+                grid.appendChild(cell);
+            });
+            
+            loadProgress();
+
+            // Fill empty cells to complete the final row
+            if (currentDayInWeek > 0) {
+                 const remainingCells = 7 - currentDayInWeek;
+                for (let i = 0; i < remainingCells; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'day-cell empty';
+                    grid.appendChild(emptyCell);
+                }
+            }
+
+
+            // Close modal events
+            closeBtn.onclick = function () {
+                modal.style.display = 'none';
+            }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            }
+});
+  </script>
+
+</body>
+</html>
